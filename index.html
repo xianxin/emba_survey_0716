@@ -1,0 +1,347 @@
+<style type="text/css">
+body{ margin:0px;}
+td{ font-family:微软雅黑}
+hr{width:900px;}
+form{margin:0px;padding:0px}
+</style>
+<div style="width:88%;padding-left:6%;font-size:16px;line-height:175%;font-family:微软雅黑,'Microsoft YaHei',SimHei">
+亲爱的 2014 春季 EMBA 新同学：您好！<br>
+&emsp;&emsp;欢迎您成为上海交大EMBA新成员！再次向您表示最诚挚的祝贺！<br>
+&emsp;&emsp;2014年恰逢安泰经管学院恢复建院三十周年，交大安泰EMBA、MBA以及管理学硕士三大核心项目同时跻身全球百强商学院。"贡献管理智慧、培养有德的领导者"是EMBA项目的使命，学院各项成绩的取得，也离不开每一位交大人的贡献。<br>
+&emsp;&emsp;本问卷旨在倾听您在申请、报考及学习过程中的意见和建议，您的反馈将有助于我们招生、教学、校友等方面工作的改进，进一步提升EMBA学员的学习收获！感谢您的支持！<br><br>
+</div>
+<hr>
+<br>
+<script src="//mis.acem.sjtu.edu.cn/jQuery/jquery-1.8.3.min.js"></script>
+
+<script type="text/javascript">
+                                        
+                                          var closedLines = [
+                                          "报纸杂志:",
+                                          "网络媒体：",
+                                          "户外媒体：",
+                                          "电视媒体：",
+                                          "推荐渠道：",
+                                          //"其 他：", // last is ok.
+                                          "性&nbsp;别:",
+                                          "出生年份:",
+                                          "工作单位性质："
+                                          //"工作单位所在地区：" // last is ok.
+                                          ];
+										  
+										  var multiples = [ "10、电脑端搜索与移动端搜索（智能手机或平板电脑）的大致使用比例为？ (*必填)",
+										  "15、您日常接触下列媒体的大致时间分配比例为： (*必填)"
+										  ];
+										  
+										  var multipleMap = null;
+										  var multipleMapFinal = null;
+										  var divsTrimed;
+                                          function trim(str) {   
+                                              return str.replace(/(^\s*)|(\s*$)/g, "");   
+                                          }
+
+                                          if (!Array.prototype.indexOf){
+                                            Array.prototype.indexOf = function(elt /*, from*/){
+                                              var len = this.length >>> 0;
+                                              var from = Number(arguments[1]) || 0;
+                                              from = (from < 0) ? Math.ceil(from) : Math.floor(from);
+                                              if (from < 0) from += len;
+                                              for (; from < len; from++){
+                                                if (from in this && this[from] === elt) return from;
+                                              }
+                                              return -1;
+                                            };
+                                          }
+                                          
+										  function initMultipleMap(divs){
+											if (!multiples || multiples.length == 0){
+												multipleMap = {};
+												multipleMapFinal = {};
+												return;
+											}
+											
+											var str = "multipleMap={";
+											divsTrimed= [];
+											for (var i = 0; i < divs.length; i ++){
+                                              var title = $(divs[i]).find("span").eq(0);
+											  
+											  try{
+												divsTrimed.push(trim(title.html()));
+											  } catch(err){}
+											}
+											
+											
+											
+											for (var i = 0; i < multiples.length; i++){
+												if (i != 0) str += ",";
+												str += "\"";
+												str += multiples[i];
+												
+												var count = 0;
+												for (var j = 0; j < divsTrimed.length; j++){
+													if (divsTrimed[j] == multiples[i])
+														count++;
+												}
+                                            	
+												str += "\":";
+												str += count;
+											}
+											str += "}";
+											multipleMap = eval("("+str+")");
+											
+											var strFinal = str.replace("multipleMap","multipleMapFinal");
+											multipleMapFinal = eval("("+strFinal+")");
+										  }
+										  
+                                          function remove_extra_empty_line(span){
+                                            if (!span || span.length==0) return;
+                                            var text = trim(span.html());
+                                            if (!text) return;
+                                            
+                                            if (closedLines.indexOf(text) > -1){
+                                              var p = span.parent().parent().parent().parent().parent().parent();
+                                              p.next().remove();
+                                            }
+                                          }
+										  
+										  /* 106 R */
+										  function FailOnFulFillOtherIfNonEmpty(idx,code){
+										    var other_checkbox;
+											var other_input;
+											var id_text = "IT002_IT00238851214_1_IT00220140702";
+											other_checkbox = document.getElementById(id_text + idx + "_" + code);
+											other_input = document.getElementById("input_" + id_text + idx);
+											if (other_checkbox.checked){
+											  if (!other_input || !(other_input.value) || other_input.length == 0){
+												alert("请在第一题的其他选项后面填写说明");
+												return true;
+											  }
+											}
+											return false;
+										  }
+										  
+										  function MustFulFillFirstQuestion(){
+										    var prefix = "IT002_IT00238851214_1_IT00220140702";
+										    var start = 106;
+											var end = 109;
+											var isChecked = false;
+											
+											for (var j = start; j <= end; j++){
+												var ckeckbox = document.getElementsByName(prefix+j);
+												var i;
+												for(i=0; i<ckeckbox.length;i++){
+													if (ckeckbox[i].checked){
+														isChecked = true;
+													}
+												}
+										    }
+											
+											/*
+											var other_checkbox;
+											var other_input;
+											other_checkbox = document.getElementById("IT002_IT00238851214_1_IT00220140702106_R");
+											other_input = document.getElementById("input_IT002_IT00238851214_1_IT00220140702106");
+											if (other_checkbox.checked){
+											  if (!other_input || !(other_input.value) || other_input.length == 0){
+												alert("请在第一题的其他选项后面填写说明");
+												return false;
+											  }
+											}*/
+											
+											var codes = ["R","K","","","","E"];
+											for (var j = start; j <= end; j ++){
+											  if (codes[j-start] != "" && FailOnFulFillOtherIfNonEmpty(j,codes[j-start])) return false;
+											}
+											
+											if (!isChecked) {
+												alert("第一题请至少选择一项内容");
+												return false;
+											} 
+											return true;
+	    								  }
+										  
+										  var patternDigits=/^[0-9]*[1-9][0-9]*$/;
+										  patternDigits =  /^([-]){0,1}([0-9]){1,}([.]){0,1}([0-9]){0,}$/; 
+										  
+										  function testNumber(text){
+											if (!text || text == "") return false;
+											return patternDigits.test(text);
+										  }
+										  
+										  function check_Hundred_Percent_Detail(start,end,result,qnum){
+											var total = 0;
+											var text = "";
+											for (var i = start; i <= end; i ++){
+											  text = document.getElementById("IT002_IT00238851214_1_IT00220140704" + i).value;
+											  if (!testNumber(text)) continue;
+											  total += parseFloat(text);
+											}
+											if (total != 100){
+											  if (result != ""){
+											    result = "第"+qnum+"题、" + result;
+											  } else {
+												result = "第"+qnum+"题所有选项的和必须为100%，请修正您的答案";
+											  }
+											}
+											return result;
+										  }
+										  
+										  function check_Hundred_Percent(){
+										    var result = "";
+											
+										    /*#10*/
+                                            /*IT002_IT00238851214_1_IT00220140704131*/
+											var start10 = 131;
+											var end10 = 132;
+											result = check_Hundred_Percent_Detail(start10,end10,result,10);
+											
+										    /*#15*/
+                                            /*IT002_IT00238851214_1_IT00220140704136*/
+											/*IT002_IT00238851214_1_IT00220140704143*/
+											if (result != "") {
+											  alert(result);
+											  return false;
+											}
+											var start15 = 136;
+											var end15 = 143;
+											result = check_Hundred_Percent_Detail(start15,end15,result,15);
+											
+											if (result != "") {
+											  alert(result);
+											  return false;
+											} else {
+											  return true;
+											}
+										  }
+										  
+										  function adjust_multiples_line(span){
+                                            if (!span || span.length==0) return;
+                                            var text = trim(span.html());
+											
+                                            if (!text) return;
+											
+											/* pattern : 最后有一个括号 */
+											var idxLast = text.lastIndexOf("（");
+											if (idxLast > 0){
+												text = text.substr(0,idxLast);
+											} else {
+												return;
+											}
+											
+											if (!multiples || multiples.length == 0) return;
+											
+											if (multiples.indexOf(text) > -1){
+											
+												// padding
+												var p_percent = span.parent().parent().next();
+												p_percent.children("td").eq(0).css("padding-left","3%");
+												
+												var p_input = p_percent.next();
+												p_input.children("td").eq(0).css("padding-left","3%");
+												
+												// percentage
+												p_input.find("input").eq(0).after($("<span style='margin-left: 5px'>%</span>"));
+												
+												// hide
+												var count = eval("(multipleMap[\""+text+"\"])");
+												var finalCount = eval("(multipleMapFinal[\""+text+"\"])");
+												// last time do not remove empty line
+												if (count == 1){
+												  var p = span.parent().parent();
+												  p.remove();
+												} 
+												// first time do not erase title
+												else if (count == finalCount){
+												  span.html(text);
+												
+												  var pp = span.parent().parent().parent().parent().parent().parent();
+												  pp.next().remove();
+												}
+												else {
+												  var pp = span.parent().parent().parent().parent().parent().parent();
+												  pp.next().remove();
+												  
+												  var p = span.parent().parent();
+												  p.remove();
+												}
+												
+												eval("(multipleMap[\""+text+"\"]--);");
+											}
+										  }
+                                          
+                                          $(document).ready(function() {
+                                            // whole page margin-top/bottom
+                                            //document.getElementsByTagName("body")[0].style.marginBottom = "20px";
+                                            //document.getElementsByTagName("body")[0].style.marginTop = "20px";
+
+											// table margin-left/right
+                                            $("#form1 > table:first > tbody > tr:gt(4) > td > div").css("padding-left", "50px");
+                                           
+                                            $("#form1 > table:first > tbody > tr:gt(4) > td > div").css("width", "900px");
+                                            
+                                            $("#form1 > table:first > tbody > tr:gt(4) > td > table").css("padding-left", "50px");
+                                          
+                                            $("#form1 > table:first > tbody > tr:gt(4) > td > table").css("width", "900px");
+
+											var inputs = $("#form1 input");
+											
+											for (var i = 0; i < inputs.length; i ++){
+												if($(inputs[i]).attr("type")=="submit"){
+												$(inputs[i]).css({"width":"100px","height":"35px","font-size":"16px","font-family":"微软雅黑"});
+												}
+											}
+											
+											
+											
+											// Question Title Bold
+                                            var divs = $("#form1 > table:first > tbody > tr:gt(4) > td > div");
+                                            for (var i = 0; i < divs.length; i ++){
+                                              var title = $(divs[i]).find("span").eq(0);
+                                              if ($(title)) $(title).css({"color": "rgb(51, 51, 51)", "font-family": "微软雅黑", "font-size": "16px", "font-weight": "none"});
+                                            }
+                                            
+                                            var tables = $("#form1 > table:first > tbody > tr:gt(4) > td > table");
+                                            for (var i = 0; i < tables.length; i ++){
+                                              var title = $(tables[i]).find("span").eq(0);
+                                              if ($(title)) $(title).css({"color": "rgb(51, 51, 51)", "font-family": "微软雅黑", "font-size": "16px", "font-weight": "none"});
+                                            }
+                                            
+											initMultipleMap(divs);
+											
+											// Remove Empty Lines Type1 : Hold Title
+                                            for (var i = 0; i < divs.length; i ++){
+                                              var title = $(divs[i]).find("span").eq(0);
+                                              remove_extra_empty_line(title);
+                                            }
+											
+											// Remove Empty Lines Type2 : Erase Title
+											for (var i = 0; i < divs.length; i ++){
+												var title = $(divs[i]).find("span").eq(0);
+												adjust_multiples_line(title);
+											}
+                                            
+											// Add Event Function
+                                            for (var i = 0; i < divs.length; i ++){
+                                              var titles = $(divs[i]).find("span");
+                                              for (var j = 1; j < titles.length; j ++){
+                                                //alert($(titles[j]).html());
+                                                titles[j].parentNode.onmouseover=function(){
+                                                  $(this).css("background-color","#ddd");
+                                                  return false;
+                                                };
+                                                titles[j].parentNode.onmouseout=function(){
+                                                  $(this).css("background-color","transparent");
+                                                  return false;
+                                                };
+                                              }
+                                            }
+											
+										    var oldValidate = validate;
+										    validate = function(objButton){
+											  if (!MustFulFillFirstQuestion()) return false;
+											  if (!check_Hundred_Percent()) return false;
+											  return oldValidate(objButton);
+											}
+                                          });
+										  
+                                        </script>
